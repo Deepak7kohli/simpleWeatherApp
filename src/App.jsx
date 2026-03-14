@@ -1,19 +1,17 @@
-import './App.css'
-import { useState } from 'react'
+import "./App.css";
+import { useState } from "react";
 
 function App() {
-
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
 
   const handleClick = async () => {
-
     // 🔑 Dummy API key (replace with your real key)
     const API_KEY = "5e93ae6e980f2847e0ab85ac88748321";
 
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`,
       );
 
       const data = await response.json();
@@ -24,7 +22,6 @@ function App() {
         alert("City not found");
         setWeather(null);
       }
-
     } catch (error) {
       console.log("Error:", error);
     }
@@ -41,22 +38,24 @@ function App() {
         onChange={(e) => setCity(e.target.value)}
       />
 
-      <button onClick={handleClick}>
-        Get Weather
-      </button>
+      <button onClick={handleClick}>Get Weather</button>
 
       {weather && weather.main && (
         <div>
-          <h2>Weather in {weather.name}</h2>
+          {/* <h2>Weather in {weather.name}</h2>
           <p>Temperature: {weather.main.temp} °C</p>
           <p>Condition: {weather.weather[0].description}</p>
           <p>Humidity: {weather.main.humidity}%</p>
-          <p>Wind Speed: {weather.wind.speed} m/s</p>
+          <p>Wind Speed: {weather.wind.speed} m/s</p> */}
+
+          <p data-value={`${weather.main.temp} °C`}>Temperature</p>
+          <p data-value={weather.weather[0].description}>Condition</p>
+          <p data-value={`${weather.main.humidity}%`}>Humidity</p>
+          <p data-value={`${weather.wind.speed} m/s`}>Wind Speed</p>
         </div>
       )}
-
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
